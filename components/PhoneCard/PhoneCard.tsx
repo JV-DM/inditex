@@ -26,7 +26,7 @@ export const PhoneCard = ({ phone }: PhoneCardProps) => {
   }
 
   return (
-    <Link href={`/product/${phone.id}`}>
+    <Link href={`/product/${phone.id}`} className={styles.cardContainer}>
       <div className={styles.card}>
         <div className={styles.imageContainer}>
           <Image
@@ -34,24 +34,22 @@ export const PhoneCard = ({ phone }: PhoneCardProps) => {
             alt={phone.name}
             fill
             className={styles.image}
-            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 20vw'
           />
         </div>
 
         <div className={styles.content}>
-          <p className={styles.brand}>{phone.brand}</p>
-          <h3 className={styles.name}>{phone.name}</h3>
+          <div className={styles.info}>
+            <p className={styles.brand}>{phone.brand}</p>
+            <h3 className={styles.name}>{phone.name}</h3>
+          </div>
 
-          <div className={styles.footer}>
-            <span className={styles.price}>
-              €{phone.basePrice.toLocaleString()}
-            </span>
-
-            <button onClick={handleAddToCart} className={styles.addButton}>
-              Add to Cart
-            </button>
+          <div className={styles.priceContainer}>
+            <span className={styles.price}>{phone.basePrice} EUR</span>
           </div>
         </div>
+
+        <div className={styles.hoverOverlay}></div>
       </div>
     </Link>
   )

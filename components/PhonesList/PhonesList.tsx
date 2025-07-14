@@ -39,8 +39,6 @@ export const PhonesList = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Phone Store</h1>
-
         <SearchBar
           onSearch={handleSearch}
           resultsCount={phones.length}

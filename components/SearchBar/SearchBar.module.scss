@@ -1,9 +1,8 @@
-@use '../../styles/variables' as *;
-@use '../../styles/mixins' as *;
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
 
 .container {
   width: 100%;
-  max-width: 32rem;
   margin: 0 auto $spacing-6;
 }
 
@@ -11,20 +10,15 @@
   position: relative;
 }
 
-.searchIcon {
-  position: absolute;
-  top: 50%;
-  left: $spacing-3;
-  transform: translateY(-50%);
-  color: $gray-400;
-  font-size: $text-xl;
-  pointer-events: none;
-}
-
 .input {
-  @include input-base;
-  padding-left: 3rem;
-  padding-right: $spacing-4;
+  width: 100%;
+  padding: $spacing-4 0;
+  font-size: $text-base;
+  background: transparent;
+  border: none;
+  border-bottom: 0.5px solid $black;
+  outline: none;
+  transition: border-color $transition-normal;
 
   &::placeholder {
     color: $gray-400;
@@ -34,7 +28,7 @@
 .spinner {
   position: absolute;
   top: 50%;
-  right: $spacing-3;
+  right: 0;
   transform: translateY(-50%);
 
   .spinnerIcon {
@@ -43,7 +37,9 @@
 }
 
 .results {
-  margin-top: $spacing-2;
-  font-size: $text-sm;
+  margin-top: $spacing-4;
+  font-size: $text-xs;
   color: $gray-600;
+  font-weight: $font-medium;
+  letter-spacing: 0.05em;
 }

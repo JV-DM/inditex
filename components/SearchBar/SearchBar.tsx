@@ -20,15 +20,11 @@ export const SearchBar = ({
   return (
     <div className={styles.container}>
       <div className={styles.inputContainer}>
-        <div className={styles.searchIcon}>
-          <span>🔍</span>
-        </div>
-
         <input
           type='text'
           value={query}
           onChange={e => updateQuery(e.target.value)}
-          placeholder='Search phones by name or brand...'
+          placeholder='Search for a smartphone...'
           className={styles.input}
         />
 
@@ -40,13 +36,7 @@ export const SearchBar = ({
       </div>
 
       <div className={styles.results}>
-        {query && !isLoading && (
-          <span>
-            {resultsCount} {resultsCount === 1 ? 'result' : 'results'} found
-            {query && ` for "${query}"`}
-          </span>
-        )}
-        {!query && !isLoading && <span>Showing all phones</span>}
+        <span>{resultsCount} RESULTS</span>
       </div>
     </div>
   )

@@ -1,64 +1,98 @@
-@use '../../styles/variables' as *;
-@use '../../styles/mixins' as *;
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.cardContainer {
+  height: fit-content;
+  width: fit-content;
+}
 
 .card {
-  @include card;
+  position: relative;
+  background-color: $white;
+  border: 1px solid $gray-200;
   cursor: pointer;
+  overflow: hidden;
+  width: 21.5rem;
+  height: 21.5rem;
 
   &:hover {
-    .image {
-      transform: scale(1.05);
+    .hoverOverlay {
+      transform: translateY(0);
+    }
+
+    .brand,
+    .name {
+      color: $white;
+    }
+
+    .price {
+      color: $white;
     }
   }
 }
 
 .imageContainer {
   position: relative;
-  height: 12rem;
-  background-color: $gray-100;
+  height: 15rem;
   overflow: hidden;
+  z-index: 2;
 }
 
 .image {
   object-fit: contain;
-  padding: $spacing-4;
-  transition: transform $transition-slow;
+  padding: $spacing-6;
 }
 
 .content {
   padding: $spacing-4;
+  @include flex-between;
+  align-items: flex-start;
+  position: relative;
+  z-index: 2;
+}
+
+.info {
+  flex: 1;
 }
 
 .brand {
   color: $gray-500;
-  font-size: $text-sm;
+  font-size: $text-xs;
   font-weight: $font-medium;
-  margin-bottom: $spacing-2;
+  margin-bottom: $spacing-1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color $transition-normal;
 }
 
 .name {
-  font-size: $text-lg;
-  font-weight: $font-semibold;
+  font-size: $text-base;
+  font-weight: $font-normal;
   color: $gray-900;
-  margin-bottom: $spacing-4;
+  margin-bottom: 0;
   @include text-clamp(2);
+  transition: color $transition-normal;
 }
 
-.footer {
-  @include flex-between;
+.priceContainer {
+  text-align: right;
 }
 
 .price {
-  font-size: $text-xl;
-  font-weight: $font-bold;
-  color: $primary-color;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $gray-900;
+  transition: color $transition-normal;
 }
 
-.addButton {
-  @include button-primary;
-  font-size: $text-sm;
-
-  &:hover {
-    transform: translateY(-1px);
-  }
+.hoverOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $black;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-out;
+  z-index: 1;
 }

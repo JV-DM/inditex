@@ -50,7 +50,10 @@
 }
 
 .loadingGrid {
-  @include grid-responsive(1, 2, 3, 4);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 21.5rem);
+  gap: 0;
+  justify-content: center;
 }
 
 .loadingSkeleton {
@@ -92,5 +95,8 @@
 }
 
 .phonesGrid {
-  @include grid-responsive(1, 2, 3, 4);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 21.5rem);
+  gap: 0;
+  justify-content: center;
 }

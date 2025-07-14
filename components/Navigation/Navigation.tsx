@@ -8,10 +8,9 @@ import styles from './Navigation.module.scss'
 
 export const Navigation = () => {
   const { cart } = useCart()
-  const { isLoading } = useLoading()
 
   return (
-    <nav className={`${styles.nav} ${isLoading ? styles.loading : ''}`}>
+    <nav className={`${styles.nav}`}>
       <div className={styles.container}>
         <Link href='/' className={styles.brand}>
           <Image src='/logo.svg' alt='Logo' width={74} height={24} />

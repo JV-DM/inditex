@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 // Flexbox utilities
 @mixin flex-center {
@@ -20,14 +20,9 @@
 }
 
 // Grid utilities
-@mixin grid-responsive(
-  $cols-mobile: 1,
-  $cols-tablet: 2,
-  $cols-desktop: 3,
-  $cols-large: 4
-) {
+@mixin grid-responsive($cols-mobile: 1, $cols-tablet: 2, $cols-desktop: 3, $cols-large: 4) {
   display: grid;
-  gap: $spacing-6;
+  gap: 0;
   grid-template-columns: repeat($cols-mobile, 1fr);
 
   @media (min-width: $sm) {
@@ -116,7 +111,7 @@
 @mixin container {
   max-width: 100%;
   margin: 0 auto;
-  padding: 0 $spacing-4;
+  padding: 0 $spacing-24;
   background-color: $white;
 
   @media (min-width: $sm) {
@@ -124,7 +119,7 @@
   }
 
   @media (min-width: $lg) {
-    padding: 0 $spacing-8;
+    padding: 0 $spacing-24;
   }
 }
 

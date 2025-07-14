@@ -12,18 +12,31 @@ export type ProductListEntity = {
 }
 
 export type ColorOption = {
-  [key: string]: any
+  hexCode: string
+  name: string
+  imageUrl: string
 }
 
 export type StorageOption = {
-  [key: string]: any
+  capacity: string
+  price: number
 }
 
 export type SimilarProduct = {
-  [key: string]: any
+  id: string
+  name: string
+  imageUrl: string
+  price: number
 }
 
 export type ProductSpecs = {
+  screen: string
+  processor: string
+  memory: string
+  storage: string
+  camera: string
+  battery: string
+  os: string
   [key: string]: any
 }
 

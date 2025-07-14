@@ -69,6 +69,7 @@ export default [
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-debugger': 'error',
       'no-unused-vars': 'off',
+      'no-useless-returns': 'on',
       'prefer-const': 'error',
       'no-var': 'error',
       'object-shorthand': 'error',

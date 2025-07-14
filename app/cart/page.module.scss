@@ -1,0 +1,276 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.container {
+  @include container;
+  min-height: 100vh;
+  padding-top: $spacing-8;
+  padding-bottom: $spacing-8;
+  background-color: $gray-50;
+}
+
+.title {
+  font-size: $text-lg;
+  font-weight: $font-semibold;
+  color: $gray-900;
+  margin-bottom: $spacing-8;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.emptyCart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  gap: $spacing-4;
+}
+
+.emptyMessage {
+  font-size: $text-lg;
+  color: $gray-600;
+  margin-bottom: $spacing-6;
+}
+
+.cartContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 60vh;
+}
+
+
+.cartItem {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: $spacing-6;
+  padding: $spacing-6;
+  margin-bottom: $spacing-8;
+}
+
+.itemImage {
+  flex-shrink: 0;
+  width: 200px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  object-fit: contain;
+  border-radius: $rounded-md;
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $spacing-2;
+  flex-grow: 1;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.itemName {
+  font-size: $text-base;
+  font-weight: $font-semibold;
+  color: $gray-900;
+  margin: 0;
+  text-transform: uppercase;
+  margin-bottom: $spacing-1;
+}
+
+.itemSpecs {
+  font-size: $text-sm;
+  color: $gray-600;
+  margin: 0;
+  margin-bottom: $spacing-2;
+}
+
+.specifications {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  margin-top: $spacing-2;
+}
+
+.spec {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  font-size: $text-sm;
+}
+
+.specLabel {
+  font-weight: $font-medium;
+  color: $gray-700;
+}
+
+.specValue {
+  color: $gray-900;
+}
+
+.colorPreview {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid $gray-300;
+}
+
+.itemActions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  
+  @media (max-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.quantityButton {
+  background-color: $gray-100;
+  border: 1px solid $gray-300;
+  color: $gray-700;
+  width: 32px;
+  height: 32px;
+  border-radius: $rounded-md;
+  cursor: pointer;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  transition: all $transition-normal;
+  
+  &:hover:not(:disabled) {
+    background-color: $gray-200;
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.quantity {
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $gray-900;
+  min-width: 24px;
+  text-align: center;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: $error-color;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  cursor: pointer;
+  transition: color $transition-normal;
+  
+  &:hover {
+    color: darken($error-color, 10%);
+  }
+}
+
+.itemPrice {
+  font-size: $text-base;
+  font-weight: $font-semibold;
+  color: $gray-900;
+  margin: 0;
+  margin-bottom: $spacing-2;
+}
+
+
+
+.errorMessage {
+  color: $error-color;
+  font-size: $text-sm;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: $font-medium;
+}
+
+.cartActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: $spacing-8;
+}
+
+.checkout {
+  display: flex;
+  align-items: center;
+  gap: $spacing-6;
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: $spacing-1;
+}
+
+.totalLabel {
+  font-size: $text-sm;
+  color: $gray-600;
+  font-weight: $font-medium;
+}
+
+.totalPrice {
+  font-size: $text-lg;
+  font-weight: $font-bold;
+  color: $gray-900;
+}
+
+.payButton {
+  background-color: $black;
+  color: $white;
+  border: none;
+  padding: $spacing-3 $spacing-8;
+  font-size: $text-base;
+  font-weight: $font-semibold;
+  cursor: pointer;
+  transition: background-color $transition-normal;
+  text-transform: uppercase;
+  min-width: 120px;
+  
+  &:hover {
+    background-color: lighten($black, 10%);
+  }
+}
+
+.continueButton {
+  background: none;
+  border: 1px solid $gray-300;
+  color: $gray-700;
+  padding: $spacing-3 $spacing-6;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  cursor: pointer;
+  transition: all $transition-normal;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  &:hover {
+    background-color: $gray-50;
+  }
+}

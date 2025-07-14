@@ -22,7 +22,7 @@ const calculateTotals = (
 ): Pick<CartState, 'totalItems' | 'totalPrice'> => {
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalPrice = items.reduce(
-    (sum, item) => sum + item.basePrice * item.quantity,
+    (sum, item) => sum + (item.basePrice + item.selectedStorage.price) * item.quantity,
     0
   )
   return { totalItems, totalPrice }
@@ -53,15 +53,22 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = (product: Omit<CartItem, 'quantity'>) => {
     setCart(prevCart => {
-      const existingItem = prevCart.items.find(item => item.id === product.id)
+      // Create unique ID based on product ID + storage + color
+      const uniqueId = `${product.id}-${product.selectedStorage.capacity}-${product.selectedColor.hexCode}`
+      
+      const existingItem = prevCart.items.find(item => {
+        const itemUniqueId = `${item.id}-${item.selectedStorage.capacity}-${item.selectedColor.hexCode}`
+        return itemUniqueId === uniqueId
+      })
 
       let newItems: CartItem[]
       if (existingItem) {
-        newItems = prevCart.items.map(item =>
-          item.id === product.id
+        newItems = prevCart.items.map(item => {
+          const itemUniqueId = `${item.id}-${item.selectedStorage.capacity}-${item.selectedColor.hexCode}`
+          return itemUniqueId === uniqueId
             ? { ...item, quantity: item.quantity + 1 }
             : item
-        )
+        })
       } else {
         newItems = [...prevCart.items, { ...product, quantity: 1 }]
       }
@@ -74,9 +81,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     })
   }
 
-  const removeFromCart = (id: string) => {
+  const removeFromCart = (uniqueId: string) => {
     setCart(prevCart => {
-      const newItems = prevCart.items.filter(item => item.id !== id)
+      const newItems = prevCart.items.filter(item => {
+        const itemUniqueId = `${item.id}-${item.selectedStorage.capacity}-${item.selectedColor.hexCode}`
+        return itemUniqueId !== uniqueId
+      })
       const totals = calculateTotals(newItems)
       return {
         items: newItems,
@@ -85,16 +95,17 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     })
   }
 
-  const updateQuantity = (id: string, quantity: number) => {
+  const updateQuantity = (uniqueId: string, quantity: number) => {
     if (quantity <= 0) {
-      removeFromCart(id)
+      removeFromCart(uniqueId)
       return
     }
 
     setCart(prevCart => {
-      const newItems = prevCart.items.map(item =>
-        item.id === id ? { ...item, quantity } : item
-      )
+      const newItems = prevCart.items.map(item => {
+        const itemUniqueId = `${item.id}-${item.selectedStorage.capacity}-${item.selectedColor.hexCode}`
+        return itemUniqueId === uniqueId ? { ...item, quantity } : item
+      })
       const totals = calculateTotals(newItems)
       return {
         items: newItems,

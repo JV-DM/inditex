@@ -8,9 +8,10 @@ import styles from './Navigation.module.scss'
 
 export const Navigation = () => {
   const { cart } = useCart()
+  const { isLoading } = useLoading()
 
   return (
-    <nav className={`${styles.nav}`}>
+    <nav className={`${styles.nav} ${isLoading ? styles.loading : ''}`}>
       <div className={styles.container}>
         <Link href='/' className={styles.brand}>
           <Image src='/logo.svg' alt='Logo' width={74} height={24} />
@@ -20,7 +21,6 @@ export const Navigation = () => {
           <Link href='/cart' className={styles.cartLink}>
             <Image src='/cart.svg' alt='Cart' width={18} height={18} />
             <span>{cart.totalItems}</span>
-            {/* Update style of total items */}
           </Link>
         </div>
       </div>

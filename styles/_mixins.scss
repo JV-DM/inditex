@@ -41,7 +41,6 @@
 // Button styles
 @mixin button-base {
   padding: $spacing-2 $spacing-4;
-  border-radius: $rounded-lg;
   font-weight: $font-medium;
   font-size: $text-sm;
   cursor: pointer;
@@ -56,12 +55,9 @@
 
 @mixin button-primary {
   @include button-base;
-  background-color: $primary-color;
+  background-color: $black;
+  width: 100%;
   color: $white;
-
-  &:hover:not(:disabled) {
-    background-color: $primary-hover;
-  }
 }
 
 @mixin button-secondary {

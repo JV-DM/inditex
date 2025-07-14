@@ -5,6 +5,15 @@ export type CartItem = {
   basePrice: number
   imageUrl: string
   quantity: number
+  selectedStorage: {
+    capacity: string
+    price: number
+  }
+  selectedColor: {
+    hexCode: string
+    name: string
+    imageUrl: string
+  }
 }
 
 export type CartState = {

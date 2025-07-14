@@ -1,0 +1,186 @@
+@use 'variables' as *;
+
+// Flexbox utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+// Grid utilities
+@mixin grid-responsive(
+  $cols-mobile: 1,
+  $cols-tablet: 2,
+  $cols-desktop: 3,
+  $cols-large: 4
+) {
+  display: grid;
+  gap: $spacing-6;
+  grid-template-columns: repeat($cols-mobile, 1fr);
+
+  @media (min-width: $sm) {
+    grid-template-columns: repeat($cols-tablet, 1fr);
+  }
+
+  @media (min-width: $lg) {
+    grid-template-columns: repeat($cols-desktop, 1fr);
+  }
+
+  @media (min-width: $xl) {
+    grid-template-columns: repeat($cols-large, 1fr);
+  }
+}
+
+// Button styles
+@mixin button-base {
+  padding: $spacing-2 $spacing-4;
+  border-radius: $rounded-lg;
+  font-weight: $font-medium;
+  font-size: $text-sm;
+  cursor: pointer;
+  border: none;
+  transition: all $transition-normal;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background-color: $primary-color;
+  color: $white;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-hover;
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background-color: $gray-100;
+  color: $gray-900;
+
+  &:hover:not(:disabled) {
+    background-color: $gray-200;
+  }
+}
+
+// Input styles
+@mixin input-base {
+  padding: $spacing-3 $spacing-4;
+  border: 1px solid $gray-300;
+  border-radius: $rounded-lg;
+  font-size: $text-base;
+  width: 100%;
+  transition: all $transition-normal;
+  outline: none;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+  }
+
+  &::placeholder {
+    color: $gray-400;
+  }
+}
+
+// Card styles
+@mixin card {
+  background-color: $white;
+  border-radius: $rounded-lg;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  transition: box-shadow $transition-normal;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+  }
+}
+
+// Container utilities
+@mixin container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 $spacing-4;
+
+  @media (min-width: $sm) {
+    padding: 0 $spacing-6;
+  }
+
+  @media (min-width: $lg) {
+    padding: 0 $spacing-8;
+  }
+}
+
+// Text utilities
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Loading spinner
+@mixin spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid $primary-color;
+  border-top: 2px solid transparent;
+  border-radius: $rounded-full;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive utilities
+@mixin mobile-only {
+  @media (max-width: $sm) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (min-width: $sm) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: $lg) {
+    @content;
+  }
+}
+
+@mixin large-up {
+  @media (min-width: $xl) {
+    @content;
+  }
+}

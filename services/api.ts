@@ -1,4 +1,9 @@
-import type { ProductListEntity, ProductEntity, ErrorEntity, GetProductsProps } from '../types/api'
+import type {
+  ProductListEntity,
+  ProductEntity,
+  ErrorEntity,
+  GetProductsProps,
+} from '../types/api'
 
 const API_BASE_URL =
   process.env.PUBLIC_API_BASE_URL ||
@@ -17,7 +22,8 @@ class ApiError extends Error {
 const fetchApi = async <T>(endpoint: string): Promise<T> => {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     headers: {
-      'x-api-key': process.env.PUBLIC_API_KEY || '87909682e6cd74208f41a6ef39fe4191',
+      'x-api-key':
+        process.env.PUBLIC_API_KEY || '87909682e6cd74208f41a6ef39fe4191',
       'Content-Type': 'application/json',
     },
   })
@@ -31,8 +37,18 @@ const fetchApi = async <T>(endpoint: string): Promise<T> => {
 }
 
 export const productsApi = {
-  getProducts: async (_props: GetProductsProps): Promise<ProductListEntity[]> => {
-    return fetchApi<ProductListEntity[]>('/products')
+  getProducts: async (
+    props?: GetProductsProps
+  ): Promise<ProductListEntity[]> => {
+    const params = new URLSearchParams()
+    if (props?.search) params.append('search', props.search)
+    if (props?.limit) params.append('limit', props.limit.toString())
+    if (props?.offset) params.append('offset', props.offset.toString())
+
+    const queryString = params.toString()
+    const endpoint = queryString ? `/products?${queryString}` : '/products'
+
+    return fetchApi<ProductListEntity[]>(endpoint)
   },
 
   getProduct: async (id: string): Promise<ProductEntity> => {

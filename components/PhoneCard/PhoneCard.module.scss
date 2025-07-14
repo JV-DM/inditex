@@ -1,0 +1,64 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.card {
+  @include card;
+  cursor: pointer;
+
+  &:hover {
+    .image {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.imageContainer {
+  position: relative;
+  height: 12rem;
+  background-color: $gray-100;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: contain;
+  padding: $spacing-4;
+  transition: transform $transition-slow;
+}
+
+.content {
+  padding: $spacing-4;
+}
+
+.brand {
+  color: $gray-500;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  margin-bottom: $spacing-2;
+}
+
+.name {
+  font-size: $text-lg;
+  font-weight: $font-semibold;
+  color: $gray-900;
+  margin-bottom: $spacing-4;
+  @include text-clamp(2);
+}
+
+.footer {
+  @include flex-between;
+}
+
+.price {
+  font-size: $text-xl;
+  font-weight: $font-bold;
+  color: $primary-color;
+}
+
+.addButton {
+  @include button-primary;
+  font-size: $text-sm;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}

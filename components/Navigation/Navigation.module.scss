@@ -3,8 +3,10 @@
 
 .nav {
   background-color: $white;
-  box-shadow: $shadow-md;
-  border-bottom: 1px solid $gray-200;
+  
+  &.loading {
+    border-bottom: 1px solid $black;
+  }
 }
 
 .container {

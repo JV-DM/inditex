@@ -1,20 +1,25 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { productsApi } from '../services/api'
 import type { ProductListEntity } from '../types/api'
+import { useLoading } from '../contexts/LoadingContext'
+import { MAX_PHONES } from './constants'
 
 export const usePhones = () => {
   const [phones, setPhones] = useState<ProductListEntity[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const { setLoading: setGlobalLoading } = useLoading()
+  const hasInitialFetch = useRef(false)
 
   const fetchPhones = useCallback(async (search?: string) => {
     try {
       setLoading(true)
+      setGlobalLoading(true)
       setError(null)
 
       const data = await productsApi.getProducts({
         search,
-        limit: 20,
+        limit: MAX_PHONES,
       })
 
       // Remove duplicates based on ID
@@ -28,6 +33,7 @@ export const usePhones = () => {
       setError('Failed to load phones. Please try again.')
     } finally {
       setLoading(false)
+      setGlobalLoading(false)
     }
   }, [])
 
@@ -39,7 +45,10 @@ export const usePhones = () => {
   )
 
   useEffect(() => {
-    fetchPhones()
+    if (!hasInitialFetch.current) {
+      hasInitialFetch.current = true
+      fetchPhones()
+    }
   }, [fetchPhones])
 
   return {

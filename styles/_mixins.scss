@@ -114,9 +114,10 @@
 
 // Container utilities
 @mixin container {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 $spacing-4;
+  background-color: $white;
 
   @media (min-width: $sm) {
     padding: 0 $spacing-6;

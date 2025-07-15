@@ -1,8 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { PhonesList } from './PhonesList'
 import { CartProvider } from '../../contexts/CartContext'
-import { productsApi } from '../../services/api'
 import type { ProductListEntity } from '../../types/api'
+import { getProducts } from '@/services/api'
 
 const mockPhones: ProductListEntity[] = [
   {
@@ -27,8 +27,10 @@ const PhonesListWithProvider = () => (
   </CartProvider>
 )
 
-jest.mock('../../services/api')
-const mockProductsApi = productsApi as jest.Mocked<typeof productsApi>
+jest.mock('@/services/api', () => ({
+  getProducts: jest.fn(),
+}))
+const mockProductsApi = getProducts as jest.Mock
 
 jest.mock('next/image', () => ({
   __esModule: true,
@@ -52,7 +54,7 @@ describe('PhonesList', () => {
   })
 
   it('renders phones list correctly', async () => {
-    mockProductsApi.getProducts.mockResolvedValue(mockPhones)
+    mockProductsApi.mockResolvedValue(mockPhones)
 
     render(<PhonesListWithProvider />)
 
@@ -63,7 +65,7 @@ describe('PhonesList', () => {
   })
 
   it('displays loading state initially', () => {
-    mockProductsApi.getProducts.mockImplementation(
+    mockProductsApi.mockImplementation(
       () => new Promise(() => {}) // Never resolves
     )
 
@@ -75,7 +77,7 @@ describe('PhonesList', () => {
   })
 
   it('displays error in snackbar when API call fails', async () => {
-    mockProductsApi.getProducts.mockRejectedValue(
+    mockProductsApi.mockRejectedValue(
       new Error('Failed to load phones. Please try again.')
     )
 
@@ -92,7 +94,7 @@ describe('PhonesList', () => {
   })
 
   it('closes snackbar when close button is clicked', async () => {
-    mockProductsApi.getProducts.mockRejectedValue(
+    mockProductsApi.mockRejectedValue(
       new Error('Failed to load phones. Please try again.')
     )
 
@@ -114,7 +116,7 @@ describe('PhonesList', () => {
   })
 
   it('filters phones when search is performed', async () => {
-    mockProductsApi.getProducts.mockResolvedValue(mockPhones)
+    mockProductsApi.mockResolvedValue(mockPhones)
 
     render(<PhonesListWithProvider />)
 
@@ -125,7 +127,7 @@ describe('PhonesList', () => {
     fireEvent.change(searchInput, { target: { value: 'iPhone' } })
 
     await waitFor(() => {
-      expect(mockProductsApi.getProducts).toHaveBeenCalledWith({
+      expect(mockProductsApi).toHaveBeenCalledWith({
         search: 'iPhone',
         limit: 20,
       })

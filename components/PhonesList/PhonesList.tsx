@@ -10,7 +10,7 @@ import styles from './PhonesList.module.scss'
 
 export const PhonesList = () => {
   const [searchQuery, setSearchQuery] = useState('')
-  const { phones, loading, error, fetchPhones, retryFetch } = usePhones()
+  const { phones, loading, error, fetchPhones } = usePhones()
   const { snackbar, showSnackbar, hideSnackbar } = useSnackbar()
 
   const handleSearch = useCallback(

@@ -19,7 +19,6 @@ export const usePhones = () => {
         limit: MAX_PHONES,
       })
 
-      // Remove duplicates based on ID
       const uniquePhones = data.filter(
         (phone, index, self) => index === self.findIndex(p => p.id === phone.id)
       )

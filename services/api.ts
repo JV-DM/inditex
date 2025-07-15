@@ -1,9 +1,13 @@
+'use server'
+
 import type {
   ProductListEntity,
   ProductEntity,
   ErrorEntity,
   GetProductsProps,
 } from '../types/api'
+
+console.log('envs ---------', process.env.PUBLIC_API_BASE_URL, process.env)
 
 const API_BASE_URL = process.env.PUBLIC_API_BASE_URL || ''
 

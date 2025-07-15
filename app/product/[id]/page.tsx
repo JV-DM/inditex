@@ -33,10 +33,7 @@ export default function ProductDetail() {
     isInitialized,
   } = useProductOptions({
     product,
-    onSelectionChange: useCallback((selections: ProductSelections) => {
-      // Handle selection changes if needed
-      console.log('Selection changed:', selections)
-    }, []),
+    onSelectionChange: useCallback((selections: ProductSelections) => {}, []),
   })
 
   const handleAddToCart = useCallback(() => {

@@ -1,0 +1,119 @@
+@use "../../styles/variables" as *;
+
+.cartItem {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: $spacing-6;
+  padding: $spacing-6;
+  margin-bottom: $spacing-8;
+}
+
+.itemImage {
+  flex-shrink: 0;
+  width: 200px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  object-fit: contain;
+  border-radius: $rounded-md;
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $spacing-2;
+  flex-grow: 1;
+}
+
+.itemName {
+  font-size: $text-base;
+  font-weight: $font-semibold;
+  color: $gray-900;
+  margin: 0;
+  text-transform: uppercase;
+  margin-bottom: $spacing-1;
+}
+
+.itemSpecs {
+  font-size: $text-sm;
+  color: $gray-600;
+  margin: 0;
+  margin-bottom: $spacing-2;
+}
+
+.itemPrice {
+  font-size: $text-base;
+  font-weight: $font-semibold;
+  color: $gray-900;
+  margin: 0;
+  margin-bottom: $spacing-2;
+}
+
+.itemActions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  margin-top: $spacing-4;
+  
+  @media (max-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.quantityButton {
+  background-color: $gray-100;
+  border: 1px solid $gray-300;
+  color: $gray-700;
+  width: 32px;
+  height: 32px;
+  border-radius: $rounded-md;
+  cursor: pointer;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  transition: all $transition-normal;
+  
+  &:hover:not(:disabled) {
+    background-color: $gray-200;
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.quantity {
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $gray-900;
+  min-width: 24px;
+  text-align: center;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: $error-color;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  cursor: pointer;
+  transition: color $transition-normal;
+  
+  &:hover {
+    color: darken($error-color, 10%);
+  }
+}

@@ -27,11 +27,9 @@ const PhonesListWithProvider = () => (
   </CartProvider>
 )
 
-// Mock the API
 jest.mock('../../services/api')
 const mockProductsApi = productsApi as jest.Mocked<typeof productsApi>
 
-// Mock Next.js Image and Link components
 jest.mock('next/image', () => ({
   __esModule: true,
   default: ({ src, alt, fill, ...props }: any) => (
@@ -76,32 +74,65 @@ describe('PhonesList', () => {
     expect(skeletons.length).toBeGreaterThan(0)
   })
 
-  it('displays error state when API call fails', async () => {
-    mockProductsApi.getProducts.mockRejectedValue(new Error('API Error'))
+  it('displays error in snackbar when API call fails', async () => {
+    mockProductsApi.getProducts.mockRejectedValue(
+      new Error('Failed to load phones. Please try again.')
+    )
 
     render(<PhonesListWithProvider />)
 
     await waitFor(() => {
-      expect(screen.getByText('Something went wrong')).toBeInTheDocument()
-      expect(screen.getByText('Try Again')).toBeInTheDocument()
+      expect(
+        screen.getByText('Failed to load phones. Please try again.')
+      ).toBeInTheDocument()
+    })
+
+    // Verify snackbar close button is present
+    expect(screen.getByLabelText('Close notification')).toBeInTheDocument()
+  })
+
+  it('closes snackbar when close button is clicked', async () => {
+    mockProductsApi.getProducts.mockRejectedValue(
+      new Error('Failed to load phones. Please try again.')
+    )
+
+    render(<PhonesListWithProvider />)
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Failed to load phones. Please try again.')
+      ).toBeInTheDocument()
+    })
+
+    fireEvent.click(screen.getByLabelText('Close notification'))
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Failed to load phones. Please try again.')
+      ).not.toBeInTheDocument()
     })
   })
 
-  it('retries API call when retry button is clicked', async () => {
-    mockProductsApi.getProducts.mockRejectedValueOnce(new Error('API Error'))
-    mockProductsApi.getProducts.mockResolvedValueOnce(mockPhones)
+  it('continues to show interface even when there is an error', async () => {
+    mockProductsApi.getProducts.mockRejectedValue(
+      new Error('Failed to load phones. Please try again.')
+    )
 
     render(<PhonesListWithProvider />)
 
     await waitFor(() => {
-      expect(screen.getByText('Try Again')).toBeInTheDocument()
+      expect(
+        screen.getByText('Failed to load phones. Please try again.')
+      ).toBeInTheDocument()
     })
 
-    fireEvent.click(screen.getByText('Try Again'))
+    // Verify that the search input is still accessible
+    expect(
+      screen.getByPlaceholderText('Search for a smartphone...')
+    ).toBeInTheDocument()
 
-    await waitFor(() => {
-      expect(screen.getByText('iPhone 12')).toBeInTheDocument()
-    })
+    // Verify that the empty state is shown instead of blocking error
+    expect(screen.getByText('No phones found')).toBeInTheDocument()
   })
 
   it('displays empty state when no phones found', async () => {
@@ -120,7 +151,7 @@ describe('PhonesList', () => {
     render(<PhonesListWithProvider />)
 
     const searchInput = await screen.findByPlaceholderText(
-      'Search phones by name or brand...'
+      'Search for a smartphone...'
     )
 
     fireEvent.change(searchInput, { target: { value: 'iPhone' } })
@@ -131,13 +162,5 @@ describe('PhonesList', () => {
         limit: 20,
       })
     })
-  })
-
-  it('renders page title', () => {
-    mockProductsApi.getProducts.mockResolvedValue(mockPhones)
-
-    render(<PhonesListWithProvider />)
-
-    expect(screen.getByText('Phone Store')).toBeInTheDocument()
   })
 })

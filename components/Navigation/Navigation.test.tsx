@@ -8,25 +8,44 @@ const NavigationWithProvider = () => (
   </CartProvider>
 )
 
+// Mock Next.js Image and Link components
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: ({ src, alt, width, height, ...props }: any) => (
+    <img src={src} alt={alt} width={width} height={height} {...props} />
+  ),
+}))
+
+jest.mock('next/link', () => ({
+  __esModule: true,
+  default: ({ href, children, ...props }: any) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+}))
+
 describe('Navigation', () => {
-  it('renders the brand name', () => {
+  it('renders the brand logo', () => {
     render(<NavigationWithProvider />)
-    expect(screen.getByText('PhoneStore')).toBeInTheDocument()
+    expect(screen.getByAltText('Logo')).toBeInTheDocument()
   })
 
-  it('renders the cart icon', () => {
+  it('renders the cart icon with item count', () => {
     render(<NavigationWithProvider />)
-    expect(screen.getByText('CART')).toBeInTheDocument()
+    expect(screen.getByAltText('Cart')).toBeInTheDocument()
+    expect(screen.getByText('0')).toBeInTheDocument()
   })
 
   it('renders cart link with correct href', () => {
     render(<NavigationWithProvider />)
-    const cartLink = screen.getByRole('link', { name: 'CART' })
+    const cartLink = screen.getByRole('link', { name: /cart/i })
     expect(cartLink).toHaveAttribute('href', '/cart')
   })
 
-  it('does not show cart badge when cart is empty', () => {
+  it('renders brand link with correct href', () => {
     render(<NavigationWithProvider />)
-    expect(screen.queryByText(/\d+/)).not.toBeInTheDocument()
+    const brandLink = screen.getByRole('link', { name: /logo/i })
+    expect(brandLink).toHaveAttribute('href', '/')
   })
 })

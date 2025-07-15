@@ -41,7 +41,7 @@ describe('PhoneCard', () => {
 
     expect(screen.getByText('Apple')).toBeInTheDocument()
     expect(screen.getByText('iPhone 12')).toBeInTheDocument()
-    expect(screen.getByText('€909')).toBeInTheDocument()
+    expect(screen.getByText('909 EUR')).toBeInTheDocument()
   })
 
   it('renders phone image with correct alt text', () => {
@@ -52,34 +52,17 @@ describe('PhoneCard', () => {
     expect(image).toHaveAttribute('src', 'https://example.com/iphone.jpg')
   })
 
-  it('renders add to cart button', () => {
-    render(<PhoneCardWithProvider phone={mockPhone} />)
-
-    expect(screen.getByText('Add to Cart')).toBeInTheDocument()
-  })
-
-  it('links to product detail page', () => {
+  it('renders as a link to product detail page', () => {
     render(<PhoneCardWithProvider phone={mockPhone} />)
 
     const link = screen.getByRole('link')
     expect(link).toHaveAttribute('href', '/product/1')
   })
 
-  it('calls add to cart when button is clicked', () => {
-    render(<PhoneCardWithProvider phone={mockPhone} />)
-
-    const addButton = screen.getByText('Add to Cart')
-    fireEvent.click(addButton)
-
-    // Since we can't easily test the cart state change,
-    // we just verify the button click doesn't throw an error
-    expect(addButton).toBeInTheDocument()
-  })
-
-  it('formats price with commas for large numbers', () => {
+  it('formats price correctly', () => {
     const expensivePhone = { ...mockPhone, basePrice: 1234567 }
     render(<PhoneCardWithProvider phone={expensivePhone} />)
 
-    expect(screen.getByText('€1,234,567')).toBeInTheDocument()
+    expect(screen.getByText('1234567 EUR')).toBeInTheDocument()
   })
 })

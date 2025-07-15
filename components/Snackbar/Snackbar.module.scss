@@ -1,0 +1,73 @@
+@use "../../styles/variables" as *;
+
+.snackbar {
+  position: fixed;
+  bottom: $spacing-6;
+  left: 50%;
+  transform: translateX(-50%);
+  color: $white;
+  padding: $spacing-4 $spacing-6;
+  border-radius: $rounded-lg;
+  box-shadow: $shadow-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  z-index: 1000;
+  min-width: 320px;
+  max-width: 90vw;
+  animation: slideUp 0.3s ease-out;
+  
+  &.success {
+    background-color: #10b981;
+  }
+  
+  &.error {
+    background-color: $error-color;
+  }
+  
+  &.warning {
+    background-color: #f59e0b;
+  }
+  
+  &.info {
+    background-color: #3b82f6;
+  }
+}
+
+.message {
+  flex: 1;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: $white;
+  font-size: $text-lg;
+  font-weight: $font-bold;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $rounded-full;
+  transition: background-color $transition-normal;
+  
+  &:hover {
+    background-color: rgba($white, 0.2);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}

@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
 import { productsApi } from '../services/api'
-import { useLoading } from '../contexts/LoadingContext'
 import type { ProductEntity } from '../types/api'
 
 type UseProductDetailReturn = {
@@ -22,14 +21,12 @@ export const useProductDetail = ({
   const [product, setProduct] = useState<ProductEntity | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const { setLoading: setGlobalLoading } = useLoading()
 
   const fetchProduct = useCallback(async () => {
     if (!productId || !enabled) return
 
     try {
       setLoading(true)
-      setGlobalLoading(true)
       setError(null)
 
       const productData = await productsApi.getProduct(productId)
@@ -41,9 +38,8 @@ export const useProductDetail = ({
       )
     } finally {
       setLoading(false)
-      setGlobalLoading(false)
     }
-  }, [productId, enabled, setGlobalLoading])
+  }, [productId, enabled])
 
   const refetch = useCallback(() => {
     fetchProduct()

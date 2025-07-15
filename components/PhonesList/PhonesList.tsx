@@ -1,14 +1,17 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { usePhones } from '../../hooks/usePhones'
+import { useSnackbar } from '../../hooks/useSnackbar'
 import { PhoneCard } from '../PhoneCard'
 import { SearchBar } from '../SearchBar'
+import { Snackbar } from '../Snackbar'
 import styles from './PhonesList.module.scss'
 
 export const PhonesList = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const { phones, loading, error, fetchPhones, retryFetch } = usePhones()
+  const { snackbar, showSnackbar, hideSnackbar } = useSnackbar()
 
   const handleSearch = useCallback(
     (query: string) => {
@@ -18,23 +21,11 @@ export const PhonesList = () => {
     [fetchPhones]
   )
 
-  if (error) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.errorContainer}>
-          <div className={styles.errorIcon}>⚠️</div>
-          <h2 className={styles.errorTitle}>Something went wrong</h2>
-          <p className={styles.errorMessage}>{error}</p>
-          <button
-            onClick={() => retryFetch(searchQuery)}
-            className={styles.retryButton}
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    )
-  }
+  useEffect(() => {
+    if (error) {
+      showSnackbar(error, 'error')
+    }
+  }, [error, showSnackbar])
 
   return (
     <div className={styles.container}>
@@ -69,6 +60,8 @@ export const PhonesList = () => {
           ))}
         </div>
       )}
+      
+      <Snackbar snackbar={snackbar} onClose={hideSnackbar} />
     </div>
   )
 }

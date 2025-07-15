@@ -81,8 +81,6 @@ export const useProductOptions = ({
     setSelectedColorState(defaultColor)
   }, [product])
 
-  console.log('storageoptions----', product?.storageOptions)
-
   const isValidSelection = Boolean(
     isInitialized &&
       selectedStorage &&
@@ -93,7 +91,6 @@ export const useProductOptions = ({
       product?.colorOptions?.some(c => c.hexCode === selectedColor.hexCode)
   )
 
-  // Only return the hook values if initialized, otherwise throw
   if (!isInitialized || !selectedStorage || !selectedColor) {
     return {
       selectedStorage: {} as StorageOption,

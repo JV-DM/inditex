@@ -12,20 +12,20 @@ describe('SearchBar', () => {
     render(<SearchBar onSearch={mockOnSearch} resultsCount={0} />)
 
     expect(
-      screen.getByPlaceholderText('Search phones by name or brand...')
+      screen.getByPlaceholderText('Search for a smartphone...')
     ).toBeInTheDocument()
   })
 
-  it('renders search icon', () => {
+  it('renders results count', () => {
     render(<SearchBar onSearch={mockOnSearch} resultsCount={0} />)
 
-    expect(screen.getByText('🔍')).toBeInTheDocument()
+    expect(screen.getByText('0 RESULTS')).toBeInTheDocument()
   })
 
   it('calls onSearch when user types', async () => {
     render(<SearchBar onSearch={mockOnSearch} resultsCount={0} />)
 
-    const input = screen.getByPlaceholderText('Search phones by name or brand...')
+    const input = screen.getByPlaceholderText('Search for a smartphone...')
     fireEvent.change(input, { target: { value: 'iPhone' } })
 
     await waitFor(
@@ -39,8 +39,8 @@ describe('SearchBar', () => {
   it('debounces search calls', async () => {
     render(<SearchBar onSearch={mockOnSearch} resultsCount={0} />)
 
-    const input = screen.getByPlaceholderText('Search phones by name or brand...')
-    
+    const input = screen.getByPlaceholderText('Search for a smartphone...')
+
     fireEvent.change(input, { target: { value: 'i' } })
     fireEvent.change(input, { target: { value: 'iP' } })
     fireEvent.change(input, { target: { value: 'iPhone' } })
@@ -58,11 +58,13 @@ describe('SearchBar', () => {
   it('displays results count correctly', () => {
     render(<SearchBar onSearch={mockOnSearch} resultsCount={5} />)
 
-    expect(screen.getByText('Showing all phones')).toBeInTheDocument()
+    expect(screen.getByText('5 RESULTS')).toBeInTheDocument()
   })
 
   it('shows loading spinner when isLoading is true', () => {
-    render(<SearchBar onSearch={mockOnSearch} resultsCount={0} isLoading={true} />)
+    render(
+      <SearchBar onSearch={mockOnSearch} resultsCount={0} isLoading={true} />
+    )
 
     expect(document.querySelector('.spinnerIcon')).toBeInTheDocument()
   })
@@ -70,22 +72,22 @@ describe('SearchBar', () => {
   it('displays search results count with query', async () => {
     render(<SearchBar onSearch={mockOnSearch} resultsCount={3} />)
 
-    const input = screen.getByPlaceholderText('Search phones by name or brand...')
+    const input = screen.getByPlaceholderText('Search for a smartphone...')
     fireEvent.change(input, { target: { value: 'Samsung' } })
 
     await waitFor(() => {
-      expect(screen.getByText('3 results found for "Samsung"')).toBeInTheDocument()
+      expect(screen.getByText('3 RESULTS')).toBeInTheDocument()
     })
   })
 
   it('shows singular result text for one result', async () => {
     render(<SearchBar onSearch={mockOnSearch} resultsCount={1} />)
 
-    const input = screen.getByPlaceholderText('Search phones by name or brand...')
+    const input = screen.getByPlaceholderText('Search for a smartphone...')
     fireEvent.change(input, { target: { value: 'iPhone' } })
 
     await waitFor(() => {
-      expect(screen.getByText('1 result found for "iPhone"')).toBeInTheDocument()
+      expect(screen.getByText('1 RESULTS')).toBeInTheDocument()
     })
   })
 })

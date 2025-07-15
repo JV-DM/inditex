@@ -1,90 +1,114 @@
 'use client'
 
-import { useCallback } from 'react'
-import { useRouter } from 'next/navigation'
-import Image from 'next/image'
+import React from 'react'
 import { useCart } from '../../contexts/CartContext'
+import { useCartPage } from '../../hooks/useCartPage'
+import { CartItem } from '../../components/CartItem'
+import { Snackbar } from '../../components/Snackbar'
+import { Loading } from '../../components/Loading'
+import type { CartItem as CartItemType } from '../../types/cart'
 import styles from './page.module.scss'
 
-const CartPage = () => {
-  const { cart } = useCart()
-  const router = useRouter()
+const CartPage: React.FC = () => {
+  const { removeFromCart, updateQuantity } = useCart()
+  const {
+    cart,
+    isLoading,
+    paymentStatus,
+    snackbar,
+    hideSnackbar,
+    handleContinueShopping,
+    handleCheckout,
+  } = useCartPage()
 
-  const handleContinueShopping = useCallback(() => {
-    router.push('/')
-  }, [router])
-
-
-  if (cart.items.length === 0) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.emptyCart}>
-          <h1 className={styles.title}>Your Cart is Empty</h1>
-          <p className={styles.emptyMessage}>Add some phones to your cart to see them here.</p>
-          <button 
-            onClick={handleContinueShopping}
-            className={styles.continueButton}
-            type="button"
-          >
-            Continue Shopping
-          </button>
-        </div>
-      </div>
-    )
+  const handleItemQuantityChange = (
+    item: CartItemType,
+    newQuantity: number
+  ) => {
+    const uniqueId = `${item.id}-${item.selectedStorage.capacity}-${item.selectedColor.hexCode}`
+    updateQuantity(uniqueId, newQuantity)
   }
+
+  const handleItemRemove = (item: CartItemType) => {
+    const uniqueId = `${item.id}-${item.selectedStorage.capacity}-${item.selectedColor.hexCode}`
+    removeFromCart(uniqueId)
+  }
+
+  const isEmptyCart = cart.items.length === 0
+  const totalPrice = cart.totalPrice || 0
+  const totalItems = cart.totalItems || 0
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>CART ({cart.totalItems})</h1>
-      
+      {isLoading && <Loading overlay text='Processing order...' />}
+
+      <h1 className={styles.title}>CART ({totalItems})</h1>
+
       <div className={styles.cartContent}>
-        {cart.items.map((item) => {
-          const totalPrice = (item.basePrice + item.selectedStorage.price) * item.quantity
-          
-          return (
-            <div key={`${item.id}-${item.selectedStorage.capacity}-${item.selectedColor.hexCode}`} className={styles.cartItem}>
-              <div className={styles.itemImage}>
-                <Image
-                  src={item.selectedColor.imageUrl}
-                  alt={item.name}
-                  width={200}
-                  height={240}
-                  className={styles.image}
-                />
-              </div>
-              
-              <div className={styles.itemDetails}>
-                <h3 className={styles.itemName}>{item.name}</h3>
-                <p className={styles.itemSpecs}>{item.selectedStorage.capacity} | {item.selectedColor.name.toUpperCase()}</p>
-                <p className={styles.itemPrice}>{totalPrice} EUR</p>
-                <p className={styles.errorMessage}>Error</p>
-              </div>
-            </div>
-          )
-        })}
-        
-        <div className={styles.cartActions}>
-          <button 
-            onClick={handleContinueShopping}
-            className={styles.continueButton}
-            type="button"
+        {cart.items.map(item => (
+          <CartItem
+            key={`${item.id}-${item.selectedStorage.capacity}-${item.selectedColor.hexCode}`}
+            item={item}
+            onQuantityChange={handleItemQuantityChange}
+            onRemove={handleItemRemove}
+            readonly={isLoading}
+          />
+        ))}
+      </div>
+
+      <div className={styles.cartActions}>
+        <button
+          onClick={handleContinueShopping}
+          className={styles.continueButton}
+          type='button'
+          disabled={isLoading}
+        >
+          CONTINUE SHOPPING
+        </button>
+
+        <div className={styles.checkout}>
+          <div className={styles.total}>
+            <span className={styles.label}>TOTAL</span>
+            <span className={styles.label}>{totalPrice} EUR</span>
+          </div>
+          <button
+            className={`${styles.payButton} ${paymentStatus === 'processing' ? styles.processing : ''}`}
+            type='button'
+            onClick={handleCheckout}
+            disabled={
+              isLoading || paymentStatus === 'processing' || isEmptyCart
+            }
           >
-            CONTINUE SHOPPING
+            {paymentStatus === 'processing' ? 'PROCESSING...' : 'PAY'}
           </button>
-          
-          <div className={styles.checkout}>
-            <div className={styles.total}>
-              <span className={styles.totalLabel}>TOTAL</span>
-              <span className={styles.totalPrice}>{cart.totalPrice} EUR</span>
-            </div>
-            <button className={styles.payButton} type="button">
-              PAY
+          <div className={styles.buttonRow}>
+            <button
+              onClick={handleContinueShopping}
+              className={styles.continueButton}
+              type='button'
+              disabled={isLoading}
+            >
+              CONTINUE SHOPPING
+            </button>
+            <button
+              className={`${styles.payButton} ${paymentStatus === 'processing' ? styles.processing : ''}`}
+              type='button'
+              onClick={handleCheckout}
+              disabled={
+                isLoading || paymentStatus === 'processing' || isEmptyCart
+              }
+            >
+              {paymentStatus === 'processing' ? 'PROCESSING...' : 'PAY'}
             </button>
           </div>
         </div>
       </div>
+
+      <Snackbar snackbar={snackbar} onClose={hideSnackbar} />
     </div>
   )
 }
+
+CartPage.displayName = 'CartPage'
 
 export default CartPage

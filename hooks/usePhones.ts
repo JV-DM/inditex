@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { productsApi } from '../services/api'
+import { getProducts } from '../services/api'
 import type { ProductListEntity } from '../types/api'
 import { MAX_PHONES } from './constants'
 
@@ -14,7 +14,7 @@ export const usePhones = () => {
       setLoading(true)
       setError(null)
 
-      const data = await productsApi.getProducts({
+      const data = await getProducts({
         search,
         limit: MAX_PHONES,
       })

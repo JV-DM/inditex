@@ -8,6 +8,7 @@ import type {
 } from '../types/api'
 
 const API_BASE_URL = process.env.PUBLIC_API_BASE_URL || ''
+const API_KEY = process.env.PUBLIC_API_KEY || ''
 
 class ApiError extends Error {
   constructor(
@@ -22,7 +23,7 @@ class ApiError extends Error {
 const fetchApi = async <T>(endpoint: string): Promise<T> => {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     headers: {
-      'x-api-key': process.env.PUBLIC_API_KEY || '',
+      'x-api-key': API_KEY,
       'Content-Type': 'application/json',
     },
   })
@@ -35,25 +36,20 @@ const fetchApi = async <T>(endpoint: string): Promise<T> => {
   return response.json()
 }
 
-export const productsApi = {
-  getProducts: async (
-    props?: GetProductsProps
-  ): Promise<ProductListEntity[]> => {
-    const params = new URLSearchParams()
-    if (props?.search) params.append('search', props.search)
-    if (props?.limit) params.append('limit', props.limit.toString())
-    if (props?.offset) params.append('offset', props.offset.toString())
+export async function getProducts(
+  props?: GetProductsProps
+): Promise<ProductListEntity[]> {
+  const params = new URLSearchParams()
+  if (props?.search) params.append('search', props.search)
+  if (props?.limit) params.append('limit', props.limit.toString())
+  if (props?.offset) params.append('offset', props.offset.toString())
 
-    const queryString = params.toString()
-    const endpoint = queryString ? `/products?${queryString}` : '/products'
+  const queryString = params.toString()
+  const endpoint = queryString ? `/products?${queryString}` : '/products'
 
-    return fetchApi<ProductListEntity[]>(endpoint)
-  },
-
-  getProduct: async (id: string): Promise<ProductEntity> => {
-    return fetchApi<ProductEntity>(`/products/${id}`)
-  },
+  return fetchApi<ProductListEntity[]>(endpoint)
 }
 
-export { ApiError }
-export type { ProductListEntity, ProductEntity, ErrorEntity }
+export async function getProduct(id: string): Promise<ProductEntity> {
+  return fetchApi<ProductEntity>(`/products/${id}`)
+}

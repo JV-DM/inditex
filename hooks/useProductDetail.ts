@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { productsApi } from '../services/api'
+import { getProduct } from '../services/api'
 import type { ProductEntity } from '../types/api'
 
 type UseProductDetailReturn = {
@@ -29,7 +29,7 @@ export const useProductDetail = ({
       setLoading(true)
       setError(null)
 
-      const productData = await productsApi.getProduct(productId)
+      const productData = await getProduct(productId)
       setProduct(productData)
     } catch (err) {
       console.error('Error fetching product:', err)

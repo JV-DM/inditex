@@ -7,7 +7,7 @@ import type {
   GetProductsProps,
 } from '../types/api'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+const API_BASE_URL = process.env.PUBLIC_API_BASE_URL || ''
 
 class ApiError extends Error {
   constructor(
@@ -22,7 +22,7 @@ class ApiError extends Error {
 const fetchApi = async <T>(endpoint: string): Promise<T> => {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     headers: {
-      'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
+      'x-api-key': process.env.PUBLIC_API_KEY || '',
       'Content-Type': 'application/json',
     },
   })

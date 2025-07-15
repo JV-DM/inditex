@@ -5,9 +5,7 @@ import type {
   GetProductsProps,
 } from '../types/api'
 
-const API_BASE_URL =
-  process.env.PUBLIC_API_BASE_URL ||
-  'https://prueba-tecnica-api-tienda-moviles.onrender.com'
+const API_BASE_URL = process.env.PUBLIC_API_BASE_URL || ''
 
 class ApiError extends Error {
   constructor(
@@ -22,8 +20,7 @@ class ApiError extends Error {
 const fetchApi = async <T>(endpoint: string): Promise<T> => {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     headers: {
-      'x-api-key':
-        process.env.PUBLIC_API_KEY || '87909682e6cd74208f41a6ef39fe4191',
+      'x-api-key': process.env.PUBLIC_API_KEY || '',
       'Content-Type': 'application/json',
     },
   })

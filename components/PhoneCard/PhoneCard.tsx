@@ -22,6 +22,15 @@ export const PhoneCard = ({ phone }: PhoneCardProps) => {
       brand: phone.brand,
       basePrice: phone.basePrice,
       imageUrl: phone.imageUrl,
+      selectedStorage: {
+        capacity: '',
+        price: 0,
+      },
+      selectedColor: {
+        hexCode: '',
+        name: '',
+        imageUrl: '',
+      },
     })
   }
 

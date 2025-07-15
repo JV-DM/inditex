@@ -7,13 +7,13 @@ interface LoadingProps {
   overlay?: boolean
 }
 
-export const Loading: React.FC<LoadingProps> = ({ 
-  size = 'medium', 
-  text = 'Loading...', 
-  overlay = false 
+export const Loading: React.FC<LoadingProps> = ({
+  size = 'medium',
+  text = 'Loading...',
+  overlay = false,
 }) => {
   const className = `${styles.loading} ${styles[size]} ${overlay ? styles.overlay : ''}`
-  
+
   return (
     <div className={className}>
       <div className={styles.spinner} />

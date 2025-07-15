@@ -22,7 +22,8 @@ const calculateTotals = (
 ): Pick<CartState, 'totalItems' | 'totalPrice'> => {
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalPrice = items.reduce(
-    (sum, item) => sum + (item.basePrice + item.selectedStorage.price) * item.quantity,
+    (sum, item) =>
+      sum + (item.basePrice + item.selectedStorage.price) * item.quantity,
     0
   )
   return { totalItems, totalPrice }
@@ -55,7 +56,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCart(prevCart => {
       // Create unique ID based on product ID + storage + color
       const uniqueId = `${product.id}-${product.selectedStorage.capacity}-${product.selectedColor.hexCode}`
-      
+
       const existingItem = prevCart.items.find(item => {
         const itemUniqueId = `${item.id}-${item.selectedStorage.capacity}-${item.selectedColor.hexCode}`
         return itemUniqueId === uniqueId

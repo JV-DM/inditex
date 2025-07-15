@@ -5,13 +5,13 @@ import type { ProductEntity, StorageOption, ColorOption } from '../types/api'
 const mockStorageOptions: StorageOption[] = [
   { capacity: '64GB', price: 0 },
   { capacity: '128GB', price: 100 },
-  { capacity: '256GB', price: 200 }
+  { capacity: '256GB', price: 200 },
 ]
 
 const mockColorOptions: ColorOption[] = [
   { hexCode: '#000000', name: 'Black', imageUrl: 'black.jpg' },
   { hexCode: '#ffffff', name: 'White', imageUrl: 'white.jpg' },
-  { hexCode: '#ff0000', name: 'Red', imageUrl: 'red.jpg' }
+  { hexCode: '#ff0000', name: 'Red', imageUrl: 'red.jpg' },
 ]
 
 const mockProduct: ProductEntity = {
@@ -27,13 +27,15 @@ const mockProduct: ProductEntity = {
     width: 71.5,
     height: 146.7,
     depth: 7.4,
-    weight: 164
-  }
+    weight: 164,
+  },
 }
 
 describe('useProductOptions', () => {
   it('initializes with default selections when product is provided', () => {
-    const { result } = renderHook(() => useProductOptions({ product: mockProduct }))
+    const { result } = renderHook(() =>
+      useProductOptions({ product: mockProduct })
+    )
 
     expect(result.current.isInitialized).toBe(true)
     expect(result.current.selectedStorage).toEqual(mockStorageOptions[0])
@@ -50,7 +52,9 @@ describe('useProductOptions', () => {
 
   it('does not initialize when product has no storage options', () => {
     const productWithoutStorage = { ...mockProduct, storageOptions: [] }
-    const { result } = renderHook(() => useProductOptions({ product: productWithoutStorage }))
+    const { result } = renderHook(() =>
+      useProductOptions({ product: productWithoutStorage })
+    )
 
     expect(result.current.isInitialized).toBe(false)
     expect(result.current.isValidSelection).toBe(false)
@@ -58,14 +62,18 @@ describe('useProductOptions', () => {
 
   it('does not initialize when product has no color options', () => {
     const productWithoutColors = { ...mockProduct, colorOptions: [] }
-    const { result } = renderHook(() => useProductOptions({ product: productWithoutColors }))
+    const { result } = renderHook(() =>
+      useProductOptions({ product: productWithoutColors })
+    )
 
     expect(result.current.isInitialized).toBe(false)
     expect(result.current.isValidSelection).toBe(false)
   })
 
   it('updates selected storage when setSelectedStorage is called', () => {
-    const { result } = renderHook(() => useProductOptions({ product: mockProduct }))
+    const { result } = renderHook(() =>
+      useProductOptions({ product: mockProduct })
+    )
 
     act(() => {
       result.current.setSelectedStorage(mockStorageOptions[1])
@@ -75,7 +83,9 @@ describe('useProductOptions', () => {
   })
 
   it('updates selected color when setSelectedColor is called', () => {
-    const { result } = renderHook(() => useProductOptions({ product: mockProduct }))
+    const { result } = renderHook(() =>
+      useProductOptions({ product: mockProduct })
+    )
 
     act(() => {
       result.current.setSelectedColor(mockColorOptions[1])
@@ -85,7 +95,9 @@ describe('useProductOptions', () => {
   })
 
   it('resets selections to defaults when resetSelections is called', () => {
-    const { result } = renderHook(() => useProductOptions({ product: mockProduct }))
+    const { result } = renderHook(() =>
+      useProductOptions({ product: mockProduct })
+    )
 
     act(() => {
       result.current.setSelectedStorage(mockStorageOptions[2])
@@ -105,14 +117,16 @@ describe('useProductOptions', () => {
 
   it('calls onSelectionChange when selections change', () => {
     const mockOnSelectionChange = jest.fn()
-    const { result } = renderHook(() => useProductOptions({ 
-      product: mockProduct, 
-      onSelectionChange: mockOnSelectionChange 
-    }))
+    const { result } = renderHook(() =>
+      useProductOptions({
+        product: mockProduct,
+        onSelectionChange: mockOnSelectionChange,
+      })
+    )
 
     expect(mockOnSelectionChange).toHaveBeenCalledWith({
       storage: mockStorageOptions[0],
-      color: mockColorOptions[0]
+      color: mockColorOptions[0],
     })
 
     act(() => {
@@ -121,22 +135,26 @@ describe('useProductOptions', () => {
 
     expect(mockOnSelectionChange).toHaveBeenCalledWith({
       storage: mockStorageOptions[1],
-      color: mockColorOptions[0]
+      color: mockColorOptions[0],
     })
   })
 
   it('does not call onSelectionChange when not initialized', () => {
     const mockOnSelectionChange = jest.fn()
-    renderHook(() => useProductOptions({ 
-      product: null, 
-      onSelectionChange: mockOnSelectionChange 
-    }))
+    renderHook(() =>
+      useProductOptions({
+        product: null,
+        onSelectionChange: mockOnSelectionChange,
+      })
+    )
 
     expect(mockOnSelectionChange).not.toHaveBeenCalled()
   })
 
   it('validates selections correctly', () => {
-    const { result } = renderHook(() => useProductOptions({ product: mockProduct }))
+    const { result } = renderHook(() =>
+      useProductOptions({ product: mockProduct })
+    )
 
     expect(result.current.isValidSelection).toBe(true)
 
@@ -158,7 +176,7 @@ describe('useProductOptions', () => {
 
     const newProduct = {
       ...mockProduct,
-      storageOptions: [{ capacity: '512GB', price: 300 }]
+      storageOptions: [{ capacity: '512GB', price: 300 }],
     }
 
     rerender({ product: newProduct })

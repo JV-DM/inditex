@@ -1,5 +1,5 @@
-@use '../../styles/variables' as *;
-@use '../../styles/mixins' as *;
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
 
 .nav {
   background-color: $white;
@@ -8,7 +8,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  
+
   &.loading {
     border-bottom: 1px solid $black;
   }
@@ -17,7 +17,7 @@
 .container {
   @include flex-between;
   @include container;
-  
+
   & {
     height: 4rem;
   }

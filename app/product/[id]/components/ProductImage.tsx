@@ -12,7 +12,7 @@ const ProductImage = memo<ProductImageProps>(({ src, alt, className }) => {
           alt={alt}
           fill
           className={`${styles.productImage} ${className || ''}`}
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes='(max-width: 768px) 100vw, 50vw'
           priority
         />
       </div>

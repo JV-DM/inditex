@@ -5,19 +5,19 @@ import type { SnackbarState } from '../../hooks/useSnackbar'
 const mockSnackbarSuccess: SnackbarState = {
   isVisible: true,
   message: 'Operation successful!',
-  type: 'success'
+  type: 'success',
 }
 
 const mockSnackbarError: SnackbarState = {
   isVisible: true,
   message: 'An error occurred',
-  type: 'error'
+  type: 'error',
 }
 
 const mockSnackbarHidden: SnackbarState = {
   isVisible: false,
   message: '',
-  type: 'success'
+  type: 'success',
 }
 
 describe('Snackbar', () => {
@@ -38,7 +38,9 @@ describe('Snackbar', () => {
 
   it('applies correct type class', () => {
     const mockOnClose = jest.fn()
-    const { container } = render(<Snackbar snackbar={mockSnackbarError} onClose={mockOnClose} />)
+    const { container } = render(
+      <Snackbar snackbar={mockSnackbarError} onClose={mockOnClose} />
+    )
 
     expect(container.firstChild).toHaveClass('error')
   })
@@ -58,7 +60,9 @@ describe('Snackbar', () => {
     render(<Snackbar snackbar={mockSnackbarHidden} onClose={mockOnClose} />)
 
     expect(screen.queryByText('Operation successful!')).not.toBeInTheDocument()
-    expect(screen.queryByLabelText('Close notification')).not.toBeInTheDocument()
+    expect(
+      screen.queryByLabelText('Close notification')
+    ).not.toBeInTheDocument()
   })
 
   it('renders close button with correct text', () => {

@@ -31,7 +31,11 @@ export type CartContextType = {
 }
 
 export type CartError = {
-  type: 'PAYMENT_FAILED' | 'NETWORK_ERROR' | 'VALIDATION_ERROR' | 'UNKNOWN_ERROR'
+  type:
+    | 'PAYMENT_FAILED'
+    | 'NETWORK_ERROR'
+    | 'VALIDATION_ERROR'
+    | 'UNKNOWN_ERROR'
   message: string
   details?: Record<string, unknown>
 }

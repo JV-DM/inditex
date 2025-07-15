@@ -3,7 +3,6 @@
 import { useSearch } from '@/hooks/useSearch'
 import styles from './SearchBar.module.scss'
 
-
 type SearchBarProps = {
   onSearch: (query: string) => void
   resultsCount: number

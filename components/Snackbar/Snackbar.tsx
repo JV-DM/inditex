@@ -13,11 +13,11 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, onClose }) => {
   return (
     <div className={`${styles.snackbar} ${styles[snackbar.type]}`}>
       <span className={styles.message}>{snackbar.message}</span>
-      <button 
+      <button
         className={styles.closeButton}
         onClick={onClose}
-        type="button"
-        aria-label="Close notification"
+        type='button'
+        aria-label='Close notification'
       >
         ×
       </button>

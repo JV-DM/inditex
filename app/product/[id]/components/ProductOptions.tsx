@@ -73,7 +73,7 @@ const ProductOptions = memo<ProductOptionsProps>(
               ))}
             </div>
             <p className={styles.colorName}>{selectedColor.name}</p>
-            
+
             <button
               onClick={onAddToCart}
               className={styles.addButton}

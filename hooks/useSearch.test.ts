@@ -68,7 +68,9 @@ describe('useSearch', () => {
 
   it('calls onSearch after custom debounce delay', () => {
     const mockOnSearch = jest.fn()
-    const { result } = renderHook(() => useSearch({ onSearch: mockOnSearch, debounceMs: 500 }))
+    const { result } = renderHook(() =>
+      useSearch({ onSearch: mockOnSearch, debounceMs: 500 })
+    )
 
     act(() => {
       result.current.updateQuery('test')

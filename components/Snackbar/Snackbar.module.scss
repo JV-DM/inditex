@@ -16,19 +16,19 @@
   min-width: 320px;
   max-width: 90vw;
   animation: slideUp 0.3s ease-out;
-  
+
   &.success {
     background-color: #10b981;
   }
-  
+
   &.error {
     background-color: $error-color;
   }
-  
+
   &.warning {
     background-color: #f59e0b;
   }
-  
+
   &.info {
     background-color: #3b82f6;
   }
@@ -55,7 +55,7 @@
   justify-content: center;
   border-radius: $rounded-full;
   transition: background-color $transition-normal;
-  
+
   &:hover {
     background-color: rgba($white, 0.2);
   }

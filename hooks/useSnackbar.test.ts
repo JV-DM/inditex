@@ -20,7 +20,7 @@ describe('useSnackbar', () => {
     expect(result.current.snackbar).toEqual({
       isVisible: false,
       message: '',
-      type: 'info'
+      type: 'info',
     })
   })
 
@@ -34,7 +34,7 @@ describe('useSnackbar', () => {
     expect(result.current.snackbar).toEqual({
       isVisible: true,
       message: 'Test message',
-      type: 'info'
+      type: 'info',
     })
   })
 
@@ -48,7 +48,7 @@ describe('useSnackbar', () => {
     expect(result.current.snackbar).toEqual({
       isVisible: true,
       message: 'Error message',
-      type: 'error'
+      type: 'error',
     })
   })
 

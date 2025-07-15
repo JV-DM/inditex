@@ -14,9 +14,10 @@ export const CartItem: React.FC<CartItemProps> = ({
   item,
   onQuantityChange,
   onRemove,
-  readonly = false
+  readonly = false,
 }) => {
-  const totalPrice = (item.basePrice + item.selectedStorage.price) * item.quantity
+  const totalPrice =
+    (item.basePrice + item.selectedStorage.price) * item.quantity
 
   const handleQuantityChange = (newQuantity: number) => {
     if (onQuantityChange && newQuantity > 0) {
@@ -41,23 +42,24 @@ export const CartItem: React.FC<CartItemProps> = ({
           className={styles.image}
         />
       </div>
-      
+
       <div className={styles.itemDetails}>
         <h3 className={styles.itemName}>{item.name}</h3>
         <p className={styles.itemSpecs}>
-          {item.selectedStorage.capacity} | {item.selectedColor.name.toUpperCase()}
+          {item.selectedStorage.capacity} |{' '}
+          {item.selectedColor.name.toUpperCase()}
         </p>
         <p className={styles.itemPrice}>{totalPrice} EUR</p>
-        
+
         {!readonly && (
           <div className={styles.itemActions}>
             <div className={styles.quantityControls}>
               <button
                 onClick={() => handleQuantityChange(item.quantity - 1)}
                 className={styles.quantityButton}
-                type="button"
+                type='button'
                 disabled={item.quantity <= 1}
-                aria-label="Decrease quantity"
+                aria-label='Decrease quantity'
               >
                 -
               </button>
@@ -65,17 +67,17 @@ export const CartItem: React.FC<CartItemProps> = ({
               <button
                 onClick={() => handleQuantityChange(item.quantity + 1)}
                 className={styles.quantityButton}
-                type="button"
-                aria-label="Increase quantity"
+                type='button'
+                aria-label='Increase quantity'
               >
                 +
               </button>
             </div>
-            
+
             <button
               onClick={handleRemove}
               className={styles.removeButton}
-              type="button"
+              type='button'
               aria-label={`Remove ${item.name} from cart`}
             >
               Remove

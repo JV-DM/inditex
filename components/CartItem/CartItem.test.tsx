@@ -11,12 +11,12 @@ const mockCartItem: CartItemType = {
   selectedColor: {
     hexCode: '#000000',
     name: 'Black',
-    imageUrl: 'https://example.com/black.jpg'
+    imageUrl: 'https://example.com/black.jpg',
   },
   selectedStorage: {
     capacity: '128GB',
-    price: 100
-  }
+    price: 100,
+  },
 }
 
 jest.mock('next/image', () => ({
@@ -46,7 +46,9 @@ describe('CartItem', () => {
 
   it('calls onQuantityChange when quantity buttons are clicked', () => {
     const mockOnQuantityChange = jest.fn()
-    render(<CartItem item={mockCartItem} onQuantityChange={mockOnQuantityChange} />)
+    render(
+      <CartItem item={mockCartItem} onQuantityChange={mockOnQuantityChange} />
+    )
 
     const increaseButton = screen.getByLabelText('Increase quantity')
     const decreaseButton = screen.getByLabelText('Decrease quantity')

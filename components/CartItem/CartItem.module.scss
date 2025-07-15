@@ -60,7 +60,7 @@
   flex-direction: column;
   gap: $spacing-3;
   margin-top: $spacing-4;
-  
+
   @media (max-width: 768px) {
     flex-direction: row;
     justify-content: center;
@@ -85,11 +85,11 @@
   font-size: $text-sm;
   font-weight: $font-medium;
   transition: all $transition-normal;
-  
+
   &:hover:not(:disabled) {
     background-color: $gray-200;
   }
-  
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -112,7 +112,7 @@
   font-weight: $font-medium;
   cursor: pointer;
   transition: color $transition-normal;
-  
+
   &:hover {
     color: darken($error-color, 10%);
   }

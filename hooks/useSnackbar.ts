@@ -16,21 +16,24 @@ export const useSnackbar = (autoHideDuration = 4000): UseSnackbarReturn => {
   const [snackbar, setSnackbar] = useState<SnackbarState>({
     isVisible: false,
     message: '',
-    type: 'info'
+    type: 'info',
   })
 
-  const showSnackbar = useCallback((message: string, type: SnackbarState['type'] = 'info') => {
-    setSnackbar({
-      isVisible: true,
-      message,
-      type
-    })
-  }, [])
+  const showSnackbar = useCallback(
+    (message: string, type: SnackbarState['type'] = 'info') => {
+      setSnackbar({
+        isVisible: true,
+        message,
+        type,
+      })
+    },
+    []
+  )
 
   const hideSnackbar = useCallback(() => {
     setSnackbar(prev => ({
       ...prev,
-      isVisible: false
+      isVisible: false,
     }))
   }, [])
 
@@ -39,7 +42,7 @@ export const useSnackbar = (autoHideDuration = 4000): UseSnackbarReturn => {
       const timer = setTimeout(() => {
         hideSnackbar()
       }, autoHideDuration)
-      
+
       return () => clearTimeout(timer)
     }
   }, [snackbar.isVisible, autoHideDuration, hideSnackbar])
@@ -47,6 +50,6 @@ export const useSnackbar = (autoHideDuration = 4000): UseSnackbarReturn => {
   return {
     snackbar,
     showSnackbar,
-    hideSnackbar
+    hideSnackbar,
   }
 }

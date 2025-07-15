@@ -43,16 +43,6 @@ export const PhonesList = () => {
             <div key={index} className={styles.loadingSkeleton} />
           ))}
         </div>
-      ) : phones.length === 0 ? (
-        <div className={styles.emptyContainer}>
-          <div className={styles.emptyIcon}>📱</div>
-          <h2 className={styles.emptyTitle}>No phones found</h2>
-          <p className={styles.emptyMessage}>
-            {searchQuery
-              ? `No phones match "${searchQuery}". Try a different search term.`
-              : 'No phones available at the moment.'}
-          </p>
-        </div>
       ) : (
         <div className={styles.phonesGrid}>
           {phones.map((phone, index) => (
@@ -60,7 +50,7 @@ export const PhonesList = () => {
           ))}
         </div>
       )}
-      
+
       <Snackbar snackbar={snackbar} onClose={hideSnackbar} />
     </div>
   )

@@ -26,7 +26,12 @@ export const usePhones = () => {
 
       setPhones(uniquePhones)
     } catch (err) {
-      console.error('Error fetching phones:', err)
+      console.error(
+        'Error fetching phones:',
+        err,
+        process.env,
+        process.env.PUBLIC_API_BASE_URL
+      )
       setError('Failed to load phones. Please try again.')
     } finally {
       setLoading(false)

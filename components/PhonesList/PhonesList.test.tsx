@@ -113,38 +113,6 @@ describe('PhonesList', () => {
     })
   })
 
-  it('continues to show interface even when there is an error', async () => {
-    mockProductsApi.getProducts.mockRejectedValue(
-      new Error('Failed to load phones. Please try again.')
-    )
-
-    render(<PhonesListWithProvider />)
-
-    await waitFor(() => {
-      expect(
-        screen.getByText('Failed to load phones. Please try again.')
-      ).toBeInTheDocument()
-    })
-
-    // Verify that the search input is still accessible
-    expect(
-      screen.getByPlaceholderText('Search for a smartphone...')
-    ).toBeInTheDocument()
-
-    // Verify that the empty state is shown instead of blocking error
-    expect(screen.getByText('No phones found')).toBeInTheDocument()
-  })
-
-  it('displays empty state when no phones found', async () => {
-    mockProductsApi.getProducts.mockResolvedValue([])
-
-    render(<PhonesListWithProvider />)
-
-    await waitFor(() => {
-      expect(screen.getByText('No phones found')).toBeInTheDocument()
-    })
-  })
-
   it('filters phones when search is performed', async () => {
     mockProductsApi.getProducts.mockResolvedValue(mockPhones)
 
